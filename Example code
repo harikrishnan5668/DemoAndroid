@@ -1,0 +1,28 @@
+package com.example.toastkotlin
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val name = findViewById(R.id.editText) as EditText
+        val batch = findViewById(R.id.editText2) as EditText
+        val version = findViewById(R.id.editText3) as EditText
+
+
+
+        val show = findViewById(R.id.button) as Button
+        show.setOnClickListener {
+
+            Toast.makeText(this@MainActivity, "The Details : \n Name: "+name.text.toString()+
+                    " \n Batch: "+batch.text.toString()+" \n Version: "+version.text.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+    }
+}
