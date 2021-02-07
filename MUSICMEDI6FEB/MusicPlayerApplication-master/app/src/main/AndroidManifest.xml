@@ -14,7 +14,7 @@
         android:theme="@style/Theme.MusicPlayerApplication">
         <activity android:name=".presentation.view.PlayerActivity"></activity>
         <activity android:name=".presentation.view.TwoTabActivity" />
-        <activity android:name=".Utilities.MainActivity">
+        <activity android:name=".presentation.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

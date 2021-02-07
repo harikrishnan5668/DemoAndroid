@@ -1,36 +1,27 @@
 package com.example.musicplayerapplication.presentation.view;
 
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.musicplayerapplication.R;
-import com.example.musicplayerservice.ISongTabInterface;
 import com.example.serviceinterface.MusicFiles;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import static com.example.musicplayerapplication.presentation.view.TwoTabActivity.musicFiles;
 
@@ -48,9 +39,6 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
     static MediaPlayer mediaPlayer;
     private Handler handler=new Handler();
     private Thread playThread,prevThread,nextThread,rewindThread,forwardThread;
-    protected ISongTabInterface songTabInterface;
-    ServiceConnection songTabServiceConnection;
-
 
     @Nullable
     @Override
@@ -68,11 +56,19 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        initConnection();
         initViews(view);
         getIntentMethod();
 
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!((TwoTabActivity)getActivity()).getCurrentPlayStatus()) {
+                    playClicked();
+                } else {
+                    pauseClicked();
+                }
+            }
+        });
         shuffle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +137,6 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
 
     @Override
     public void onResume() {
-        playThread();
         prevThread();
         nextThread();
         rewindThread();
@@ -315,41 +310,6 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
         prevThread.start();
     }
 
-    void initConnection() {
-        songTabServiceConnection = new ServiceConnection() {
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-                // TODO Auto-generated method stub
-                songTabInterface = null;
-                Toast.makeText(requireActivity(),"Tab Service Disconnected", Toast.LENGTH_SHORT).show();
-                Log.d("IRemote", "Binding -Song Tab Service disconnected");
-            }
-
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                // TODO Auto-generated method stub
-
-
-                songTabInterface = ISongTabInterface.Stub.asInterface((IBinder) service);
-                Toast.makeText(requireActivity(), "NowPlaying Fragment Connected", Toast.LENGTH_SHORT).show();
-                Log.d("IRemote", "Binding is done -Song Tab Service connected");
-            }
-        };
-        if (songTabInterface == null) {
-
-            Intent intent = new Intent();
-            intent.setPackage("com.example.musicplayerservice");
-            intent.setAction("service.SongTab");
-            // binding to remote service
-            getActivity().bindService(intent, songTabServiceConnection, Service.BIND_AUTO_CREATE);
-        }
-    }
-    public void onDestroy() {
-        super.onDestroy();
-        getActivity().unbindService(songTabServiceConnection);
-    }
-
     private void previousBtnClicked() {
         if(mediaPlayer.isPlaying())
         {
@@ -384,7 +344,7 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
             });
             mediaPlayer.setOnCompletionListener(this);
             play.setImageResource(R.drawable.pause);
-            mediaPlayer.start();
+            //mediaPlayer.start();
         }
         else
         {
@@ -421,33 +381,22 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
         }
     }
 
-    private void playThread() {
-        playThread=new Thread()
-        {
-            @Override
-            public void run() {
-                super.run();
-                play.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        playPauseBtnClicked();
+    private void playClicked() {
+        play.setImageResource(R.drawable.pause);
+        ((TwoTabActivity)getActivity()).playClicked();
+    }
 
-                    }
-                });
-            }
-        };
-        playThread.start();
+    private void pauseClicked() {
+        play.setImageResource(R.drawable.play);
+        ((TwoTabActivity)getActivity()).pauseClicked();
     }
 
 
     private void playPauseBtnClicked() {
-        if (mediaPlayer.isPlaying()) {
+        //if (mediaPlayer.isPlaying()) {
            play.setImageResource(R.drawable.play);
-            try {
-                songTabInterface.play();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+           ((TwoTabActivity)getActivity()).playClicked();
+
           /*  try {
 
                 if (songTabInterface.pause(num)==1){
@@ -459,6 +408,7 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
             }catch (RemoteException e){
                 e.printStackTrace();
             }*/
+        /*
             seekBar.setMax(mediaPlayer.getDuration()/1000);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -487,7 +437,7 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
             }catch (RemoteException e){
                 e.printStackTrace();
             }*/
-            seekBar.setMax(mediaPlayer.getDuration()/1000);
+           /* seekBar.setMax(mediaPlayer.getDuration()/1000);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -499,7 +449,7 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
                     handler.postDelayed(this,1000);
                 }
             });
-        }
+        }*/
     }
 
 
@@ -553,10 +503,10 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(requireContext(), uri);
-                mediaPlayer.start();
+                //mediaPlayer.start();
             } else {
                 mediaPlayer = MediaPlayer.create(requireContext(), uri);
-                mediaPlayer.start();
+                //mediaPlayer.start();
             }
             mediaPlayer.setOnCompletionListener(this);
             seekBar.setMax(mediaPlayer.getDuration() / 1000);
@@ -590,7 +540,7 @@ public class NowPlayingFragment extends Fragment implements MediaPlayer.OnComple
         {
             play.setImageResource(R.drawable.pause);
             mediaPlayer=MediaPlayer.create(requireContext(),uri);
-            mediaPlayer.start();
+            //mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(this);
         }
 

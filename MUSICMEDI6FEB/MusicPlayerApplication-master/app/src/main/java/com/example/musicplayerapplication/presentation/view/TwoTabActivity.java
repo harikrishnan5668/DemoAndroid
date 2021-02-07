@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.musicplayerapplication.R;
+import com.example.musicplayerapplication.domain.HmiServiceInterface;
+import com.example.musicplayerapplication.domain.HmiServiceListener;
 import com.example.serviceinterface.MusicFiles;
 import com.google.android.material.tabs.TabLayout;
 
@@ -25,22 +27,30 @@ public class TwoTabActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE=1;
     static ArrayList<MusicFiles> musicFiles;
+    private HmiServiceInterface mHmiServiceInterface;
+    private final HmiServiceListener mHmiServiceListener = new HmiServiceListener() {
+        @Override
+        public void notifyPlayStatus(boolean playStatus) {
+            Log.d("TwoTabActivity", "notifyPlayStatus");
+        }
+
+        @Override
+        public void notifyCurrentMetadata(MusicFiles file) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_tab);
-
+        mHmiServiceInterface = new HmiServiceInterface(this, mHmiServiceListener);
         permission();
     }
-    public void permission()
-    {
-        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
+    public void permission() {
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(TwoTabActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_CODE);
-        }
-        else
-        {
+        } else {
             musicFiles=getAllAudio(this);
             initViewPager();
         }
@@ -122,6 +132,30 @@ public class TwoTabActivity extends AppCompatActivity {
                 }
                 cursor.close();
             }
-        }return tempAudioList;
+        }
+        return tempAudioList;
+    }
+
+    public void playClicked() {
+        if (mHmiServiceInterface != null) {
+            Log.d("Hmi TwoTabActivity", "playClicked");
+            mHmiServiceInterface.play();
+        }
+    }
+
+    public boolean getCurrentPlayStatus() {
+        boolean currentPlayStatus = false;
+        if (mHmiServiceInterface != null) {
+            currentPlayStatus =  mHmiServiceInterface.getCurrentPlayStatus();
+        }
+        Log.d("Hmi TwoTabActivity", "currentPlayStatus " + currentPlayStatus);
+        return currentPlayStatus;
+    }
+
+    public void pauseClicked() {
+        Log.d("Hmi TwoTabActivity", "pauseClicked");
+        if (mHmiServiceInterface != null) {
+            mHmiServiceInterface.pause();
+        }
     }
 }
