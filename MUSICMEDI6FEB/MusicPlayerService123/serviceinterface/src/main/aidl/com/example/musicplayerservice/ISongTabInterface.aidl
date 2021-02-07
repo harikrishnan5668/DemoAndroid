@@ -2,6 +2,7 @@
 package com.example.musicplayerservice;
 
 // Declare any non-default types here with import statements
+import com.example.musicplayerservice.IServiceListener;
 
 interface ISongTabInterface {
 
@@ -9,6 +10,7 @@ interface ISongTabInterface {
     int pause(int num);*/
 
      void play();
-
-    // void registerListener(IServiceListener listener);
+     void pause();
+     void registerListener(IServiceListener listener);
+     boolean getCurrentPlayStatus();
 }

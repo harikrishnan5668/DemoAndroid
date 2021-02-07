@@ -20,7 +20,7 @@
             android:name=".SongTabService"
             android:process=":remote">
             <intent-filter>
-                <action android:name="service.SongTab" />
+                <action android:name="com.example.musicplayerservice.start" />
             </intent-filter>
         </service>
 

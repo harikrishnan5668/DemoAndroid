@@ -2,7 +2,6 @@ package com.example.musicplayerservice;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 
@@ -33,10 +32,24 @@ public class SongTabService extends Service {
      */
     private final ISongTabInterface.Stub mBinder = new ISongTabInterface.Stub() {
 
-
         @Override
         public void play() throws RemoteException {
+            ServiceManager.getServiceManager().play();
+        }
 
+        @Override
+        public void pause() throws RemoteException {
+            ServiceManager.getServiceManager().pause();
+        }
+
+        @Override
+        public void registerListener(IServiceListener listener) throws RemoteException {
+            ServiceManager.getServiceManager().setListener(listener);
+        }
+
+        @Override
+        public boolean getCurrentPlayStatus() throws RemoteException {
+            return ServiceManager.getServiceManager().getCurrentPlayStatus();
         }
     };
 }
