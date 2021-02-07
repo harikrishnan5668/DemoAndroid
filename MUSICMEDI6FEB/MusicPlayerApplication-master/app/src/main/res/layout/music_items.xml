@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#111111"
+    android:paddingTop="10dp"
+    android:layout_marginTop="15dp"
+    android:id="@+id/audio_items">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/music_cover"
+        android:src="@mipmap/ic_launcher_round"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/file_name"
+        android:layout_width="714dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/music_cover"
+        android:layout_toRightOf="@+id/music_cover"
+        android:ellipsize="marquee"
+        android:gravity="fill"
+        android:scrollHorizontally="true"
+        android:text="File Name"
+        android:textColor="@color/white"
+
+        android:textSize="30dp"
+        tools:ignore="RtlCompat" />
+
+    <ImageView
+        android:id="@+id/play_pause"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:layout_marginLeft="29dp"
+        android:layout_toRightOf="@+id/file_name"
+        android:padding="10dp"
+        android:src="@drawable/play_invisible" />
+
+
+</RelativeLayout>

@@ -1,0 +1,4 @@
+include ':app'
+include ':serviceinterface'
+project(":serviceinterface").projectDir = new File(settingsDir, "../MusicPlayerService123/serviceinterface")
+rootProject.name = "Music Player Application"

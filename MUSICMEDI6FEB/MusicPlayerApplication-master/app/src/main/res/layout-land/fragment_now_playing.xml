@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bgmusic"
+
+    tools:context=".presentation.view.PlayerActivity">
+
+    <LinearLayout
+        android:layout_width="497dp"
+        android:layout_height="257dp"
+        android:layout_marginStart="424dp"
+        android:layout_marginLeft="424dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
+        android:layout_marginBottom="240dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/songName"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="center"
+            android:text="Song Name"
+            android:textColor="@color/white"
+            android:textSize="56sp"
+            tools:layout_editor_absoluteX="448dp"
+            tools:layout_editor_absoluteY="86dp" />
+
+        <TextView
+            android:id="@+id/artistName"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:gravity="center"
+            android:text="Artist Name"
+            android:textColor="@color/white"
+            android:textSize="36dp"
+            tools:layout_editor_absoluteX="448dp"
+            tools:layout_editor_absoluteY="162dp" />
+
+        <TextView
+            android:id="@+id/albumName"
+            android:layout_width="match_parent"
+            android:layout_height="99dp"
+            android:gravity="center"
+            android:text="Album Name"
+            android:textColor="@color/white"
+            android:textSize="36dp"
+            tools:layout_editor_absoluteX="448dp"
+            tools:layout_editor_absoluteY="246dp" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="979dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="387dp"
+        android:layout_marginBottom="168dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/durationPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="1:20"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="783dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp" />
+
+        <TextView
+            android:id="@+id/elapsedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="4:20"
+            android:textColor="@color/white"
+            android:textSize="30dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="971dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="466dp"
+        android:layout_marginBottom="67dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/repeat" />
+
+        <ImageView
+            android:id="@+id/rewind"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/fast_rewind" />
+
+        <ImageView
+            android:id="@+id/previous"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_skip_previous_24" />
+
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/next" />
+
+        <ImageView
+            android:id="@+id/forward"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/fast_forward" />
+
+        <ImageView
+            android:id="@+id/shuffle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/shuffle" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="329dp"
+        android:layout_height="249dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="568dp"
+        android:layout_marginRight="568dp"
+        android:layout_marginBottom="254dp"
+        android:src="@drawable/preview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

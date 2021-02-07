@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.musicplayerapplication">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/micon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/micon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MusicPlayerApplication">
+        <activity android:name=".presentation.view.PlayerActivity"></activity>
+        <activity android:name=".presentation.view.TwoTabActivity" />
+        <activity android:name=".Utilities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>
